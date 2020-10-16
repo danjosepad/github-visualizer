@@ -186,7 +186,6 @@ function Repository({ match }) {
         <title>Repo not found</title>
       </Helmet>
         <Lottie
-          animationData="https://assets9.lottiefiles.com/datafiles/gUENLc1262ccKIO/data.json"
           options={LottieOptions}
           height={300}
           width={300}

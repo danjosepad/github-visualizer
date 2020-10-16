@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { AiOutlineGithub, AiOutlinePlus } from 'react-icons/ai'
+import { AiOutlineGithub, AiOutlinePlus } from 'react-icons/ai';
+import { BsTrash } from 'react-icons/bs';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Helmet } from 'react-helmet';
+import Lottie from 'react-lottie';
 
 // Project imports
 
@@ -16,14 +18,20 @@ import {
   RepositoriesWrapper,
   RepositoryContainer,
   FormWrapper,
-  StyledErrorMessage
+  StyledErrorMessage,
+  DeleteOrganizationButton,
+  EmptyRepositoryText,
+  EmptyRepositoryWrapper
  } from './styles';
 import { H1 as Title, H4 as OrgName, Span } from '../../styles/fonts';
 import { colors } from '../../styles/theme';
 import api from '../../services/api';
+import EmptyBox from '../../assets/empty-box.json';
 
 function Home() {
-  const [repositories, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState(
+    JSON.parse(localStorage.getItem('@Github:repos')) || []
+  );
 
   const onAdd = async (values, { setSubmitting, setFieldError }) => {
     setSubmitting(true);
@@ -32,12 +40,14 @@ function Home() {
 
       if (!IsValueDuplicated) {
         const { data: response } = await api.get(`/orgs/${values.orgName}`);
-        setRepositories(repos => [...repos, {
-         name: response.name,
-         description: response.description,
-         repoURL: response.login,
-         URL: response.avatar_url,
-        }])
+        const reposUpdated = [...repositories, {
+          name: response.name,
+          description: response.description,
+          repoURL: response.login,
+          URL: response.avatar_url,
+         }]
+        setRepositories(reposUpdated)
+        localStorage.setItem('@Github:repos', JSON.stringify(reposUpdated))
       }
     } catch (err) {
       if(err.response.status === 404) {
@@ -53,6 +63,15 @@ function Home() {
 
     // console.log(response)
   }
+  const deleteRepo = (idx, event) => {
+    // Making sure only to click on button instead of div and button
+    event.preventDefault();
+
+    const repositoriesMirror = [...repositories];
+    repositoriesMirror.splice(idx, 1);
+    setRepositories(repositoriesMirror);
+    localStorage.setItem('@Github:repos', JSON.stringify(repositoriesMirror))
+  }
 
   const validationSchema = Yup.object({
     // We could use required over here but since as an user experience
@@ -61,12 +80,20 @@ function Home() {
     orgName: Yup.string()
   })
 
+  // We can use JSON as gif using Lottie so we have more performance
+  const LottieOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: EmptyBox
+  }
+
   return (
     <Container>
       <Helmet>
         <title>Github Visualizer</title>
       </Helmet>
       <Content>
+
         <LogoContent>
           <AiOutlineGithub size="160px"/>
           <Title>Github Visualizer</Title>
@@ -107,16 +134,34 @@ function Home() {
           </Formik>
         </LogoContent>
         <RepositoriesWrapper>
-        {repositories.map((repo, idx) => (
-          <RepositoryContainer
-            key={`${repo} ${idx}`}
-            to={`/${repo.repoURL}`}
-          >
-            <img src={repo.URL} alt={repo.name} />
-            <OrgName>{repo.name}</OrgName>
-            <Span>{repo.description}</Span>
-          </RepositoryContainer>
-        ))}
+        {repositories[0] ? (
+          repositories.map((repo, idx) => (
+            <RepositoryContainer
+              key={`${repo} ${idx}`}
+              to={`/${repo.repoURL}`}
+            >
+              <DeleteOrganizationButton onClick={(e) => {
+                deleteRepo(idx, e)
+              }}>
+                <BsTrash size="20px" color={colors.white} />
+              </DeleteOrganizationButton>
+              <img src={repo.URL} alt={repo.name} />
+              <OrgName>{repo.name}</OrgName>
+              <Span>{repo.description}</Span>
+            </RepositoryContainer>
+          ))
+        ) : (
+          <EmptyRepositoryWrapper>
+            <Lottie
+              options={LottieOptions}
+              height={300}
+              width={300}
+            />
+            <EmptyRepositoryText>
+              Adicione uma organização
+            </EmptyRepositoryText>
+          </EmptyRepositoryWrapper>
+        )}
         </RepositoriesWrapper>
 
       </Content>

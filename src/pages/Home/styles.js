@@ -169,4 +169,5 @@ export const EmptyRepositoryWrapper = styled.div`
 export const EmptyRepositoryText = styled(H3)`
   margin-top: 40px;
   color: ${colors.gray};
+  text-align: center;
 `

@@ -95,7 +95,10 @@ function Repository({ match }) {
     'red',
     'green',
     'yellow',
-    'blue'
+    'blue',
+    'orange',
+    'pink',
+    'purple'
   ]
 
   const getRandomColor = (language) => {
@@ -206,7 +209,7 @@ function Repository({ match }) {
           </LoadingWrapper>
         ) : (
           <>
-          <LogoContent>
+          <LogoContent data-aos="fade-up">
             <img src={organizationData.avatar_url} alt={`${organizationData.name} avatar`} />
             <Title>{organizationData.name}</Title>
             <StyledH3 color={colors.gray}>
@@ -253,7 +256,7 @@ function Repository({ match }) {
               handleChange,
               errors
             }) => (
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} data-aos="fade-up">
                 <FormWrapper>
                   <Input
                     type="text"
@@ -277,7 +280,7 @@ function Repository({ match }) {
           </Formik>
           </>
         )}
-      <ReposContent>
+      <ReposContent data-aos="fade-up" data-aos-delay="500">
         {repositories.map(repo => (
           <RepoContent key={repo.id}>
             <RepoTitle>{repo.name}</RepoTitle>

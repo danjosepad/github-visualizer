@@ -1,10 +1,21 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 // Project imports
 
 import { colors, shadows } from '../../styles/theme';
 
+const fadeUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`
 
 export const Container = styled.div`
   display: flex;
@@ -21,6 +32,7 @@ export const LogoContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  animation: ${fadeUp} 0.25s;
 `
 
 export const Form = styled.form`

@@ -6,6 +6,18 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { mediaQuery } from '../../styles/breakpoints';
 import { colors, shadows } from '../../styles/theme';
 
+const fadeUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`
+
 const rotate = keyframes`
   from {
     transform: rotate(0deg);
@@ -54,6 +66,8 @@ export const LogoContent = styled.div`
     height: 160px;
     border-radius: 50%;
   }
+
+  animation : ${fadeUp} 0.25s;
 `
 
 export const InfoContent = styled.div`
@@ -92,6 +106,7 @@ export const Form = styled.form`
   flex-direction: column;
   width: 100%;
   max-width: 420px;
+  animation : ${fadeUp} 0.25s;
 `;
 
 export const FormWrapper = styled.div`
@@ -157,6 +172,7 @@ export const RepoContent = styled.div`
   padding: 8px 16px 16px;
   box-shadow: ${shadows.default};
   transition: box-shadow 0.2s;
+  animation : ${fadeUp} 0.75s;
 
   &:hover {
     box-shadow: ${shadows.Card};

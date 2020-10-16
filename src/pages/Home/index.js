@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlineGithub, AiOutlinePlus } from 'react-icons/ai'
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { Helmet } from 'react-helmet';
 
 // Project imports
 
@@ -62,11 +63,13 @@ function Home() {
 
   return (
     <Container>
+      <Helmet>
+        <title>Github Visualizer</title>
+      </Helmet>
       <Content>
         <LogoContent>
           <AiOutlineGithub size="160px"/>
           <Title>Github Visualizer</Title>
-
           <Formik
             initialValues={{ orgName: '' }}
             validationSchema={validationSchema}

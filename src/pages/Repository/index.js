@@ -7,6 +7,7 @@ import { BiGitRepoForked } from 'react-icons/bi';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Lottie from 'react-lottie';
+import { Helmet } from 'react-helmet';
 
 // Project imports
 
@@ -175,8 +176,12 @@ function Repository({ match }) {
 
   return (
    <>
+
     {repoNotFound ? (
       <ColumnContainer>
+      <Helmet>
+        <title>Repo not found</title>
+      </Helmet>
         <Lottie
           animationData="https://assets9.lottiefiles.com/datafiles/gUENLc1262ccKIO/data.json"
           options={LottieOptions}
@@ -192,6 +197,9 @@ function Repository({ match }) {
       </Link>
 
       <Content>
+      <Helmet>
+        <title>{organizationData.name}</title>
+      </Helmet>
         {loading ? (
           <LoadingWrapper>
             <AiOutlineLoading3Quarters size="160px" color={colors.green} />

@@ -1,11 +1,11 @@
 import React from 'react';
 
+// Project imports
+
+import Routes from './routes';
+
 function App() {
-  return (
-    <div className="App">
-      Testing
-    </div>
-  );
+  return <Routes />
 }
 
 export default App;

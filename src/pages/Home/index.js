@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AiOutlineGithub, AiOutlinePlus } from 'react-icons/ai'
-import { Formik } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 // Project imports
@@ -13,7 +13,9 @@ import {
   Input,
   Button,
   RepositoriesWrapper,
-  RepositoryContainer
+  RepositoryContainer,
+  FormWrapper,
+  StyledErrorMessage
  } from './styles';
 import { H1 as Title, H4 as OrgName, Span } from '../../styles/fonts';
 import { colors } from '../../styles/theme';
@@ -79,21 +81,24 @@ function Home() {
               errors
             }) => (
               <Form onSubmit={handleSubmit}>
-                <Input
-                  type="text"
-                  name="orgName"
-                  placeholder="Adicionar organização"
-                  isError={errors.orgName}
-                  onChange={handleChange}
-                  value={values.orgName}
-                />
-                <Button
-                  type="submit"
-                  disabled={values.orgName === '' || isSubmitting}
-                  isError={errors.orgName}
-                  >
-                  <AiOutlinePlus size="25px" color={colors.white} />
-                </Button>
+                <FormWrapper>
+                  <Input
+                    type="text"
+                    name="orgName"
+                    placeholder="Adicionar organização"
+                    isError={errors.orgName}
+                    onChange={handleChange}
+                    value={values.orgName}
+                  />
+                  <Button
+                    type="submit"
+                    disabled={values.orgName === '' || isSubmitting}
+                    isError={errors.orgName}
+                    >
+                    <AiOutlinePlus size="25px" color={colors.white} />
+                  </Button>
+                </FormWrapper>
+                <ErrorMessage name="orgName" component={StyledErrorMessage} />
               </Form>
             )}
           </Formik>

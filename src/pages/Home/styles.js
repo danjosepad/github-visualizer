@@ -24,11 +24,18 @@ export const LogoContent = styled.div`
 `
 
 export const Form = styled.form`
+  margin-top: 30px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   width: 100%;
   max-width: 420px;
 `;
+
+export const FormWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+`
 
 export const Input = styled.input`
   width: 100%;
@@ -109,3 +116,10 @@ export const RepositoryContainer = styled(Link)`
     box-shadow: ${shadows.Card};
   }
 `;
+
+export const StyledErrorMessage = styled.div`
+  margin-top: 20px;
+  color: ${colors.red};
+  font-weight: 700;
+  font-family: 'Roboto';
+  `

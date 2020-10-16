@@ -89,10 +89,16 @@ export const InfoWrapper = styled.div`
 export const Form = styled.form`
   margin-top: 30px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   width: 100%;
   max-width: 420px;
 `;
+
+export const FormWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+`
 
 export const Input = styled.input`
   width: 100%;
@@ -204,3 +210,21 @@ export const PaginateButton = styled.button`
     animation: ${rotate} 2s linear infinite;
   }
 `
+
+export const ColumnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 24px;
+
+  h3 {
+    text-align: center;
+  }
+`
+export const StyledErrorMessage = styled.div`
+  margin-top: 20px;
+  color: ${colors.red};
+  font-weight: 700;
+  font-family: 'Roboto';
+  `

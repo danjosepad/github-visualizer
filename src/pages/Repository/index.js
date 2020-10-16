@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 import { FiLink } from 'react-icons/fi';
 import { GrLocation } from 'react-icons/gr';
 import { BiGitRepoForked } from 'react-icons/bi';
-import { Formik } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import Lottie from 'react-lottie';
 
 // Project imports
 
+import Error404 from '../../assets/404.json';
 import api from '../../services/api';
 import { colors } from '../../styles/theme';
 import {
@@ -26,17 +28,21 @@ import {
   Circle,
   RepoInfoContent,
   StyledArrowBack,
-  PaginateButton
+  PaginateButton,
+  ColumnContainer,
+  StyledErrorMessage,
+  FormWrapper
 } from './styles';
-import { H1 as Title, H3 as OrgDescription, H4 as RepoTitle, Span } from '../../styles/fonts';
+import { H1 as Title, H3 as StyledH3, H4 as RepoTitle, Span } from '../../styles/fonts';
 
 
-function Repository({ match, history }) {
+function Repository({ match }) {
   const [loading, setLoading] = useState(true);
   const [organizationData, setOrganizationData] = useState({});
   const [repositories, setRepositories] = useState([]);
   const [listOfLanguages, setListOfLanguages] = useState([]);
   const [hidePaginateButton, setHidePaginateButton] = useState(false);
+  const [repoNotFound, setRepoNotFound] = useState(false);
 
   // Page manager
   const [page, setPage] = useState(1);
@@ -47,20 +53,26 @@ function Repository({ match, history }) {
 
   const loadRepoData = useCallback(
     async () => {
-      const [org, repos] = await Promise.all([
-        api.get(`orgs/${repoName}`),
-        api.get(`orgs/${repoName}/repos`, {
-          params: {
-            direction: 'asc',
-            per_page: 5,
-          }
-        }),
-      ]);
-      console.log({ org, repos })
-      setRepositories(repos.data);
-      setOrganizationData(org.data);
-      setHidePaginateButton(false); // Make sure that everything would be fine
-      setLoading(false);
+
+      try {
+        const [org, repos] = await Promise.all([
+          api.get(`orgs/${repoName}`),
+          api.get(`orgs/${repoName}/repos`, {
+            params: {
+              direction: 'asc',
+              per_page: 5,
+            }
+          }),
+        ]);
+        console.log({ org, repos })
+        setRepositories(repos.data);
+        setOrganizationData(org.data);
+        setHidePaginateButton(false); // Make sure that everything would be fine
+        setLoading(false);
+      } catch (error) {
+        setRepoNotFound(true);
+      }
+
     },
     [repoName]
   );
@@ -154,8 +166,27 @@ function Repository({ match, history }) {
     setSubmitting(false);
   }
 
+  // We can use JSON as gif using Lottie so we have more performance
+  const LottieOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: Error404
+  }
+
   return (
-    <Container>
+   <>
+    {repoNotFound ? (
+      <ColumnContainer>
+        <Lottie
+          animationData="https://assets9.lottiefiles.com/datafiles/gUENLc1262ccKIO/data.json"
+          options={LottieOptions}
+          height={300}
+          width={300}
+        />
+        <StyledH3 color={colors.black}>A página que procura não foi encontrada</StyledH3>
+      </ColumnContainer>
+    ) : (
+      <Container>
       <Link to="/">
         <StyledArrowBack />
       </Link>
@@ -170,25 +201,25 @@ function Repository({ match, history }) {
           <LogoContent>
             <img src={organizationData.avatar_url} alt={`${organizationData.name} avatar`} />
             <Title>{organizationData.name}</Title>
-            <OrgDescription color={colors.gray}>
+            <StyledH3 color={colors.gray}>
               {organizationData.description}
-            </OrgDescription>
+            </StyledH3>
             <InfoContent>
               {organizationData.location && (
                 <InfoWrapper>
                   <GrLocation color={colors.grayLight} />
-                  <OrgDescription color={colors.gray}>
+                  <StyledH3 color={colors.gray}>
                     {organizationData.location}
-                  </OrgDescription>
+                  </StyledH3>
                 </InfoWrapper>
               )}
 
               {organizationData.blog && (
                 <InfoWrapper>
                   <FiLink color={colors.gray} />
-                  <OrgDescription color={colors.gray}>
+                  <StyledH3 color={colors.gray}>
                     {organizationData.blog}
-                  </OrgDescription>
+                  </StyledH3>
                 </InfoWrapper>
               )}
             </InfoContent>
@@ -215,21 +246,24 @@ function Repository({ match, history }) {
               errors
             }) => (
               <Form onSubmit={handleSubmit}>
-                <Input
-                  type="text"
-                  name="repoName"
-                  placeholder="Buscar repositórios"
-                  isError={errors.repoName}
-                  onChange={handleChange}
-                  value={values.repoName}
-                />
-                <Button
-                  type="submit"
-                  disabled={values.repoName === '' || isSubmitting}
-                  isError={errors.repoName}
-                  >
-                  <AiOutlinePlus size="25px" color={colors.white} />
-                </Button>
+                <FormWrapper>
+                  <Input
+                    type="text"
+                    name="repoName"
+                    placeholder="Buscar repositórios"
+                    isError={errors.repoName}
+                    onChange={handleChange}
+                    value={values.repoName}
+                  />
+                  <Button
+                    type="submit"
+                    disabled={values.repoName === '' || isSubmitting}
+                    isError={errors.repoName}
+                    >
+                    <AiOutlinePlus size="25px" color={colors.white} />
+                  </Button>
+                </FormWrapper>
+                <ErrorMessage name="repoName" component={StyledErrorMessage} />
               </Form>
             )}
           </Formik>
@@ -262,9 +296,9 @@ function Repository({ match, history }) {
       {!hidePaginateButton && (
         <>
           {endPaginate ? (
-            <OrgDescription color={colors.gray}>
+            <StyledH3 color={colors.gray}>
               Não foi possível encontrar mais repositórios
-            </OrgDescription>
+            </StyledH3>
           ) : (
             <PaginateButton
               type="button"
@@ -280,6 +314,8 @@ function Repository({ match, history }) {
 
       </Content>
     </Container>
+    )}
+   </>
   )
 }
 

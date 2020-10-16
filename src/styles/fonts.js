@@ -19,12 +19,13 @@ export const H3 = styled.h3`
 
 export const H4 = styled.h4`
   font-size: 16px;
-  line-height: 28px;
+  margin: 12px 0px;
   color: ${({ color }) => color ? color : colors.black};
 `;
 
 export const Span = styled.span`
   font-size: 14px;
   line-height: 16px;
-  color: ${({ color }) => color ? color : colors.white};
+  color: ${({ color }) => color ? color : colors.grayDark};
+  font-weight: ${ ({isBold }) => isBold ? 700 : 400 };
 `;

@@ -39,6 +39,7 @@ export const Input = styled.input`
   border: 1px solid ${colors.grayLighter};
   box-shadow: ${shadows.default};
   transition: background 0.2s;
+  font-size: 16px;
 
   ${ ({ isError }) => isError && `
     border: 1px solid ${colors.red};
@@ -76,21 +77,35 @@ export const RepositoriesWrapper = styled.div`
 `;
 
 export const RepositoryContainer = styled(Link)`
-  margin: 64px 32px 0px;
   flex: 1 1 250px;
-  height: 140px;
-  padding: 8px;
+  max-width: 564px;
   display: flex;
   flex-direction: column;
+
+  background: ${colors.whiteDarker};
+  margin: 64px 32px 0px;
+  padding: 16px 0px 20px;
   border-radius: 16px;
+
   box-shadow: ${shadows.default};
   align-items: center;
-  background: ${colors.whiteDarker};
   cursor: pointer;
+  text-decoration: none;
+  transition: box-shadow 0.2s;
 
   img {
     width: 78px;
     height: 78px;
     margin-bottom: 8px;
+    border-radius: 50%;
+  }
+
+  span {
+    margin: 0px 8px;
+    text-align: center;
+  }
+
+  &:hover {
+    box-shadow: ${shadows.Card};
   }
 `;

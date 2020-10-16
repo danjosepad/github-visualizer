@@ -15,7 +15,7 @@ import {
   RepositoriesWrapper,
   RepositoryContainer
  } from './styles';
-import { H1 as Title, H4 as OrgName } from '../../styles/fonts';
+import { H1 as Title, H4 as OrgName, Span } from '../../styles/fonts';
 import { colors } from '../../styles/theme';
 import api from '../../services/api';
 
@@ -29,9 +29,10 @@ function Home() {
 
       if (!IsValueDuplicated) {
         const { data: response } = await api.get(`/orgs/${values.orgName}`);
-        console.log(response)
         setRepositories(repos => [...repos, {
          name: response.name,
+         description: response.description,
+         repoURL: response.login,
          URL: response.avatar_url,
         }])
       }
@@ -52,7 +53,7 @@ function Home() {
 
   const validationSchema = Yup.object({
     // We could use required over here but since as an user experience
-    // we don't want the border to go red everythng he deletes text
+    // we don't want the border to go red everythng he deletes text so
     // we may just check if is a string
     orgName: Yup.string()
   })
@@ -81,7 +82,7 @@ function Home() {
                 <Input
                   type="text"
                   name="orgName"
-                  placeholder="Adicionar repositórios"
+                  placeholder="Adicionar organização"
                   isError={errors.orgName}
                   onChange={handleChange}
                   value={values.orgName}
@@ -99,9 +100,13 @@ function Home() {
         </LogoContent>
         <RepositoriesWrapper>
         {repositories.map((repo, idx) => (
-          <RepositoryContainer key={`${repo} ${idx}`} to={`/${repo.name}`}>
+          <RepositoryContainer
+            key={`${repo} ${idx}`}
+            to={`/${repo.repoURL}`}
+          >
             <img src={repo.URL} alt={repo.name} />
             <OrgName>{repo.name}</OrgName>
+            <Span>{repo.description}</Span>
           </RepositoryContainer>
         ))}
         </RepositoriesWrapper>

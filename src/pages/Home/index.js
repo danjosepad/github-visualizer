@@ -94,7 +94,7 @@ function Home() {
       </Helmet>
       <Content>
 
-        <LogoContent>
+        <LogoContent data-testid="#logoContent">
           <AiOutlineGithub size="160px"/>
           <Title>Github Visualizer</Title>
           <Formik
@@ -114,6 +114,7 @@ function Home() {
                 <FormWrapper>
                   <Input
                     type="text"
+                    data-testid="#orgNameInput"
                     name="orgName"
                     placeholder="Adicionar organização"
                     isError={errors.orgName}
@@ -128,7 +129,7 @@ function Home() {
                     <AiOutlinePlus size="25px" color={colors.white} />
                   </Button>
                 </FormWrapper>
-                <ErrorMessage name="orgName" component={StyledErrorMessage} />
+                <ErrorMessage id="orgName" name="orgName" component={StyledErrorMessage} />
               </Form>
             )}
           </Formik>
@@ -139,6 +140,7 @@ function Home() {
             <RepositoryContainer
               key={`${repo} ${idx}`}
               to={`/${repo.repoURL}`}
+              data-testid="#organizationContent"
             >
               <DeleteOrganizationButton onClick={(e) => {
                 deleteRepo(idx, e)
@@ -158,12 +160,11 @@ function Home() {
               width={300}
             />
             <EmptyRepositoryText>
-              Adicione uma organização
+              Adicione uma organização para começar
             </EmptyRepositoryText>
           </EmptyRepositoryWrapper>
         )}
         </RepositoriesWrapper>
-
       </Content>
     </Container>
   )

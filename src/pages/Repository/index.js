@@ -195,7 +195,7 @@ function Repository({ match }) {
     ) : (
       <Container>
       <Link to="/">
-        <StyledArrowBack />
+        <StyledArrowBack data-testid="#redirectButtonBack"/>
       </Link>
 
       <Content>
@@ -256,9 +256,10 @@ function Repository({ match }) {
               errors
             }) => (
               <Form onSubmit={handleSubmit} data-aos="fade-up">
-                <FormWrapper>
+                <FormWrapper data-testid="#formWrapper">
                   <Input
                     type="text"
+                    data-testid="#repoNameInput"
                     name="repoName"
                     placeholder="Buscar repositórios"
                     isError={errors.repoName}
@@ -281,7 +282,7 @@ function Repository({ match }) {
         )}
       <ReposContent data-aos="fade-up" data-aos-delay="500">
         {repositories.map(repo => (
-          <RepoContent key={repo.id}>
+          <RepoContent key={repo.id} data-testid="#repositoryContent">
             <RepoTitle>{repo.name}</RepoTitle>
             <Span>{repo.description}</Span>
             <RepoInfoContent>

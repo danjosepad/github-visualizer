@@ -44,15 +44,7 @@ describe('Search for an specific repository', () => {
   it('should successfully search for an repository', () => {
     cy.findByTestId('#repoNameInput').type('codemod');
     cy.findByTestId('#formWrapper').find('button').click();
-  });
-
-  it('should clear search bar and show repositories', () => {
-    // Due to the nature of clear function, we should wait a little bit
-    // just to make sure everything on promise would be fine
-    // Not the necessary, but better safe than sorry
-    cy.wait(750);
-    cy.findByTestId('#repoNameInput').clear();
-    cy.findAllByTestId('#repositoryContent').should('have.length', 5);
+    cy.findAllByTestId('#repositoryContent').should('have.length', 1);
   });
 
   it('should redirect back from home', () => {

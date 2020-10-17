@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AiOutlineLoading3Quarters, AiOutlinePlus, AiFillStar } from 'react-icons/ai';
+import { AiOutlineLoading3Quarters, AiFillStar } from 'react-icons/ai';
 import { BiGitRepoForked } from 'react-icons/bi';
 import { Formik, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import Lottie from 'react-lottie';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
+import { VscSearch } from 'react-icons/vsc';
 
 // Project imports
 
@@ -250,7 +251,10 @@ function Repository({ match }) {
               errors,
             }) => (
               <Form onSubmit={handleSubmit} data-aos="fade-up">
-                <FormWrapper data-testid="#formWrapper">
+                <FormWrapper
+                  isSubmitting={isSubmitting}
+                  data-testid="#formWrapper"
+                >
                   <Input
                     type="text"
                     data-testid="#repoNameInput"
@@ -265,7 +269,11 @@ function Repository({ match }) {
                     disabled={values.repoName === '' || isSubmitting}
                     isError={errors.repoName}
                   >
-                    <AiOutlinePlus size="25px" color={colors.white} />
+                    {isSubmitting ? (
+                      <AiOutlineLoading3Quarters size="25px" color={colors.white} />
+                    ) : (
+                      <VscSearch size="25px" color={colors.white} />
+                    )}
                   </Button>
                 </FormWrapper>
                 <ErrorMessage name="repoName" component={StyledErrorMessage} />

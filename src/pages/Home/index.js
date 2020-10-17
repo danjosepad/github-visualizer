@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiOutlineGithub, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineGithub, AiOutlinePlus, AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -121,7 +121,7 @@ function Home() {
               errors,
             }) => (
               <Form onSubmit={handleSubmit}>
-                <FormWrapper>
+                <FormWrapper isSubmitting={isSubmitting}>
                   <Input
                     type="text"
                     data-testid="#orgNameInput"
@@ -136,7 +136,11 @@ function Home() {
                     disabled={values.orgName === '' || isSubmitting}
                     isError={errors.orgName}
                   >
-                    <AiOutlinePlus size="25px" color={colors.white} />
+                    {isSubmitting ? (
+                      <AiOutlineLoading3Quarters size="25px" color={colors.white} />
+                    ) : (
+                      <AiOutlinePlus size="25px" color={colors.white} />
+                    )}
                   </Button>
                 </FormWrapper>
                 <ErrorMessage id="orgName" name="orgName" component={StyledErrorMessage} />

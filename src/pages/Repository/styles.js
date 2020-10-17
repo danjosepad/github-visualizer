@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 // Project imports
@@ -119,6 +119,12 @@ export const FormWrapper = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+
+  ${({ isSubmitting }) => isSubmitting && css`
+     svg {
+      animation: ${rotate} 2s linear infinite;
+    }
+  `};
 `;
 
 export const Input = styled.input`

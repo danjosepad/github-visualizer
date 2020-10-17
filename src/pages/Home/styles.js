@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 // Project imports
@@ -15,6 +15,15 @@ const fadeUp = keyframes`
   to {
     opacity: 1;
     transform: translateY(0px);
+  }
+`;
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 `;
 
@@ -52,6 +61,12 @@ export const FormWrapper = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+
+  ${({ isSubmitting }) => isSubmitting && css`
+     svg {
+      animation: ${rotate} 2s linear infinite;
+    }
+  `};
 `;
 
 export const Input = styled.input`

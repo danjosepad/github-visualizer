@@ -64,7 +64,7 @@ function Repository({ match }) {
             },
           }),
         ]);
-        console.log({ org, repos });
+
         setRepositories(repos.data);
         setOrganizationData(org.data);
         setHidePaginateButton(false); // Make sure that everything would be fine
@@ -230,11 +230,11 @@ function Repository({ match }) {
                 </LogoContent>
                 <Formik
                   initialValues={{ repoName: '' }}
-                  validate={async ({ repositoryName }) => {
+                  validate={async values => {
                     // Now we know that this will only occur
                     // when user searched and successfully found
                     // an existing repository
-                    if (repositoryName === '' && hidePaginateButton) {
+                    if (values.repoName === '' && hidePaginateButton) {
                       await loadRepoData();
                     }
                   }}
@@ -273,55 +273,54 @@ function Repository({ match }) {
             )
 }
                 </Formik>
+                <ReposContent data-aos="fade-up" data-aos-delay="500">
+                  {repositories.map(repo => (
+                    <RepoContent
+                      key={repo.id}
+                      data-testid="#repositoryContent"
+                      href={`https://github.com/${repoName}/${repo.name}`}
+                    >
+                      <RepoTitle>{repo.name}</RepoTitle>
+                      <Span>{repo.description}</Span>
+                      <RepoInfoContent>
+                        {repo.language && (
+                        <InfoWrapper>
+                          <Circle color={getRandomColor(repo.language)} />
+                          <Span isBold>{repo.language}</Span>
+                        </InfoWrapper>
+                        )}
+                        <InfoWrapper>
+                          <BiGitRepoForked color={colors.black} />
+                          <Span isBold>{repo.forks}</Span>
+                        </InfoWrapper>
+                        <InfoWrapper>
+                          <AiFillStar color={colors.yellow} />
+                          <Span isBold>{repo.stargazers_count}</Span>
+                        </InfoWrapper>
+                      </RepoInfoContent>
+                    </RepoContent>
+                  ))}
+                </ReposContent>
+                {!hidePaginateButton && (
+                <>
+                  {endPaginate ? (
+                    <StyledH3 color={colors.gray}>
+                      Não foi possível encontrar mais repositórios
+                    </StyledH3>
+                  ) : (
+                    <PaginateButton
+                      type="button"
+                      onClick={() => handlePaginate()}
+                    >
+                      {isLoadingMore ? (
+                        <AiOutlineLoading3Quarters size="30px" color={colors.white} />
+                      ) : 'Carregar'}
+                    </PaginateButton>
+                  )}
+                </>
+                )}
               </>
             )}
-            <ReposContent data-aos="fade-up" data-aos-delay="500">
-              {repositories.map(repo => (
-                <RepoContent
-                  key={repo.id}
-                  data-testid="#repositoryContent"
-                  href={`https://github.com/${repoName}/${repo.name}`}
-                >
-                  <RepoTitle>{repo.name}</RepoTitle>
-                  <Span>{repo.description}</Span>
-                  <RepoInfoContent>
-                    {repo.language && (
-                    <InfoWrapper>
-                      <Circle color={getRandomColor(repo.language)} />
-                      <Span isBold>{repo.language}</Span>
-                    </InfoWrapper>
-                    )}
-                    <InfoWrapper>
-                      <BiGitRepoForked color={colors.black} />
-                      <Span isBold>{repo.forks}</Span>
-                    </InfoWrapper>
-                    <InfoWrapper>
-                      <AiFillStar color={colors.yellow} />
-                      <Span isBold>{repo.stargazers_count}</Span>
-                    </InfoWrapper>
-                  </RepoInfoContent>
-                </RepoContent>
-              ))}
-            </ReposContent>
-            {!hidePaginateButton && (
-            <>
-              {endPaginate ? (
-                <StyledH3 color={colors.gray}>
-                  Não foi possível encontrar mais repositórios
-                </StyledH3>
-              ) : (
-                <PaginateButton
-                  type="button"
-                  onClick={() => handlePaginate()}
-                >
-                  {isLoadingMore ? (
-                    <AiOutlineLoading3Quarters size="30px" color={colors.white} />
-                  ) : 'Carregar'}
-                </PaginateButton>
-              )}
-            </>
-            )}
-
           </Content>
         </Container>
       )}

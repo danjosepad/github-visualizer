@@ -44,7 +44,10 @@ function Home() {
     setSubmitting(true);
     try {
       const IsValueDuplicated = repositories
-        .some(repo => repo === values.orgName);
+        .some(
+          repo => repo.name === values.orgName
+          || repo.repoURL === values.orgName.toLowerCase()
+        );
 
       if (!IsValueDuplicated) {
         const { data: response } = await api.get(`/orgs/${values.orgName}`);
@@ -53,7 +56,6 @@ function Home() {
           description: response.description,
           repoURL: response.login,
           URL: response.avatar_url,
-          isShowing: true,
         }];
         setRepositories(reposUpdated);
         localStorage.setItem('@Github:orgs', JSON.stringify(reposUpdated));
@@ -149,7 +151,6 @@ function Home() {
               <RepositoryContainer
                 key={`${repo} ${idx}`}
                 to={`/${repo.repoURL}`}
-                isShowing={repo.isShowing}
                 data-testid="#organizationContent"
               >
                 <DeleteOrganizationButton onClick={(e) => {

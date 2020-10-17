@@ -80,7 +80,7 @@ function Home() {
     const repositoriesMirror = [...repositories];
     repositoriesMirror.splice(idx, 1);
     setRepositories(repositoriesMirror);
-    localStorage.setItem('@Github:repos', JSON.stringify(repositoriesMirror));
+    localStorage.setItem('@Github:orgs', JSON.stringify(repositoriesMirror));
   };
 
   const validationSchema = Yup.object({

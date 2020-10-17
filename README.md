@@ -57,7 +57,7 @@ O motivo de escolher um gerenciamento de multiplas organizações, e listar e pe
 
 Ou acesse o [link do netlify](https://wonderful-pike-87aad7.netlify.app/) (OBS: Recomendo utilizar o local caso queira alterar os links pelo própria URL, já que ao alterar para o link do repositório, o netlify reconhece como outro endereço e não acessará a paginação estruturada)
 
-### Funcinalidades 
+### Funcionalidades 
 
 - Buscar e salvar organizações (Validação para busca)
 - Excluir organizações

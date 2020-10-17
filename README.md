@@ -57,6 +57,17 @@ O motivo de escolher um gerenciamento de multiplas organizações, e listar e pe
 
 Ou acesse o [link do netlify](https://wonderful-pike-87aad7.netlify.app/) (OBS: Recomendo utilizar o local caso queira alterar os links pelo própria URL, já que ao alterar para o link do repositório, o netlify reconhece como outro endereço e não acessará a paginação estruturada)
 
+### Funcinalidades 
+
+- Buscar e salvar organizações (Validação para busca)
+- Excluir organizações
+- Acessar dados da organização (Validação para link de URL)
+- Visualizar repositórios
+- Acessar repositório
+- Buscar por mais repositórios
+- Pesquisar por repositório (Validação para busca)
+- Ao apagar pesquisa voltam a aparecer os repositórios de forma padrão
+
 ## :clipboard: Documentação
 
 Aqui irei citar de forma geral as ferramentas utilizadas, e o motivo para o uso, dando um contexto geral no por quê de cada coisa:

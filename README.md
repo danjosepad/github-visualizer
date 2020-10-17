@@ -47,6 +47,8 @@ O Github Visualizer permite que você busque e gerencie novas organizações den
 
 ## Como Usar
 
+[yarn]() para instalar dependencias.
+
 [yarn start]() para iniciar.
 
 [yarn cypress]() com o projeto iniciado para abrir o cypress para testes end-to-end.

@@ -1,68 +1,72 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">
+    <img alt="GitVisualizer" title="titleImage" src=".github/logo.png" width="250px" />
+</h1>
 
-## Available Scripts
+<h4 align="center">
+  🚀 Github Visualizer
+</h4>
+<p align="center">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/danjosepad/github-visualizer">
 
-In the project directory, you can run:
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/danjosepad/github-visualizer">
+  
+  <a href="https://github.com/danjosepad/github-visualizer/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/danjosepad/github-visualizer">
+  </a>
 
-### `yarn start`
+  <a href="https://github.com/danjosepad/github-visualizer/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/danjosepad/github-visualizer">
+  </a>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+</p>
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<p align="center">
+  <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#clipboard-documentação">Documentação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#uso-de-ferramentas-no-código">Ferramentas</a>
+</p>
 
-### `yarn test`
+<br>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<p align="center">
+  <img alt="appScreens" src=".github/appScreens.png" width="100%">
+</p>
 
-### `yarn build`
+## :rocket: Tecnologias
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Esse projeto foi desenvolvido com:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- [React](https://reactjs.org)
+- [Figma](https://www.figma.com/file/O8xkvke8TAMm24vxbhoecM/Github-Visualizer)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 💻 Projeto
 
-### `yarn eject`
+O Github Visualizer permite que você busque e gerencie novas organizações dentro do github, e interaja com elas visualizando e buscando por seus repositórios!
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## :clipboard: Documentação
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Aqui irei citar de forma geral as ferramentas utilizadas, e o motivo para o uso, dando um contexto geral no por quê de cada coisa:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- **Figma** - Antes de iniciar o projeto, queria ter certeza da imagem que eu queria passsar para o mesmo, e nada mais útil e eficaz do que usar o Figma para garantir a qualidade inicial. Através desse [Link](https://www.figma.com/file/O8xkvke8TAMm24vxbhoecM/Github-Visualizer?node-id=0%3A1) é possível visualizar um pouco do esqueleto feito antes de colocar a mão na massa e codar!
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- **ReactJS** - Através dele é possível criarmos aplicações performáticas seguindo o conceito SPA e melhorar a estruturação através da bagagem nessa biblioteca.
 
-## Learn More
+## Uso de Ferramentas no código
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Formik** - Mesmo que nesse momento pareça "matar uma formiga com uma bazooka", quis apresentar para mostrar como é fácil utilizar, e garantir que caso esse projeto tenha novas funcionalidades, será possível escalar de maneira fácil e com qualidade através dessa biblioteca. Junto a ela, utilizei também o Yup, para garantir de forma geral a estrutura que os dados virão.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Styled Components** - Através dessa biblioteca eu consigo garantir a qualidade da estilização usando Javascript, podendo gerenciar props, hierarquias e muito mais. Pra ajudar na estrutura, optei por uso de tipografia, breakpoints e cores na aba styles baseadas no material-ui para garantir a qualidade e escalabilidade do mesmo.
 
-### Code Splitting
+- **Lottie** - O uso dessa biblioteca se deu por adicionar gifs em JSON, de uma forma que se apresente muito performática.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- **React-Helmet** - Pra dar um "charme" e gerenciar os titulos tanto do aplicativo principal quanto das organizações ao acessá-las, trazendo usabilidade e melhoria na experiência de usuário.
 
-### Analyzing the Bundle Size
+- **Axios** - Através do Axios, pude consumir a API do Github sem precisar trabalhar de uma maneira "vanilla", mas que ainda garante performance e agilidade no processo.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+- **Cypress** - Para garantir a qualidade do código e se está tudo funcionando conforme o planejado, estruturei testes end-to-end no projeto para garantir que tanto a API quanto o client estão se comunicando da maneira que deveriam.
 
-### Making a Progressive Web App
+- **React Router Dom** - Para garantir a paginação e estruturação performática de um SPA.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- **React Icons** - Para garantir a qualidade na interface, optei pelo React Icons por trazer aquela "cara" mais profissional ao projeto.
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

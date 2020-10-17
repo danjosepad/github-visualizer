@@ -49,7 +49,7 @@ O Github Visualizer permite que você busque e gerencie novas organizações den
 
 [yarn start]() para iniciar.
 
-[yarn cypress]() para abrir o cypress para testes end-to-end.
+[yarn cypress]() com o projeto iniciado para abrir o cypress para testes end-to-end.
 
 Ou acesse o [link do netlify](https://wonderful-pike-87aad7.netlify.app/) (OBS: Recomendo utilizar o local caso queira alterar os links pelo própria URL, já que ao alterar para o link do repositório, o netlify reconhece como outro endereço e não acessará a paginação estruturada)
 

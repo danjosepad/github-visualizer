@@ -45,6 +45,8 @@ Esse projeto foi desenvolvido com:
 
 O Github Visualizer permite que você busque e gerencie novas organizações dentro do github, e interaja com elas visualizando e buscando por seus repositórios!
 
+O motivo de escolher um gerenciamento de multiplas organizações, e listar e pesquisar novos repositórios surgiu mais como uma ideia de melhorar a visualização e facilitar a busca por organizações.
+
 ## Como Usar
 
 [yarn]() para instalar dependencias.

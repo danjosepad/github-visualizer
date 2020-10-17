@@ -56,6 +56,7 @@ export const LogoContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 
   h3 {
     text-align: center;
@@ -75,6 +76,11 @@ export const InfoContent = styled.div`
   width: 100%;
   flex-direction: column;
   align-items: center;
+
+  & > div {
+    justify-content: center;
+    flex: 1;
+  }
 
   & > * + * {
     margin-top: 8px;
@@ -165,7 +171,7 @@ export const ReposContent = styled.div`
   }
 `
 
-export const RepoContent = styled.div`
+export const RepoContent = styled.a`
   flex: 1;
   border-radius: 16px;
   background: ${colors.white};
@@ -173,10 +179,23 @@ export const RepoContent = styled.div`
   box-shadow: ${shadows.default};
   transition: box-shadow 0.2s;
   animation : ${fadeUp} 0.75s;
+  cursor: pointer;
+  text-decoration: none;
+
+  & > h4 {
+    color: ${colors.grayDark};
+    transition: color 0.2s;
+  }
 
   &:hover {
     box-shadow: ${shadows.Card};
+
+    & > h4 {
+      color: ${colors.green};
+      transition: color 0.2s;
+    }
   }
+
 `
 
 export const Circle = styled.div`
@@ -189,9 +208,10 @@ export const Circle = styled.div`
 export const RepoInfoContent = styled.div`
   margin-top: 16px;
   display: flex;
+  flex-wrap: wrap;
 
   & > * + * {
-    margin-left: 12px;
+    margin: 8px;
   }
 `
 
@@ -232,6 +252,7 @@ export const ColumnContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
   margin: 0px 24px;
 
   h3 {

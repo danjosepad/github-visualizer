@@ -47,11 +47,27 @@ describe('Search for an specific repository', () => {
   })
 
   it('should clear search bar and show repositories', () => {
+    // Due to the nature of clear function, we should wait a little bit
+    // just to make sure everything on promise would be fine
+    // Not the necessary, but better safe than sorry
+    cy.wait(750)
     cy.findByTestId('#repoNameInput').clear();
     cy.findAllByTestId('#repositoryContent').should('have.length', 5)
   })
 
   it('should redirect back from home', () => {
+    cy.findByTestId('#redirectButtonBack').click();
+    cy.url().should('eq', 'http://localhost:3000/')
+  })
+})
+
+describe('Redirect to an wrong organization', () => {
+  it('should appear an 404 message on wrong redirect', () => {
+    cy.visit('http://localhost:3000/Testingqoa');
+    cy.findByText('A página que procura não foi encontrada').should('exist');
+  })
+
+  it('should redirect back to home page', () => {
     cy.findByTestId('#redirectButtonBack').click();
     cy.url().should('eq', 'http://localhost:3000/')
   })

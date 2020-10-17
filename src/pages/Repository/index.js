@@ -150,12 +150,7 @@ function Repository({ match }) {
     setSubmitting(true);
     try {
         const { data: response } = await api.get(`/repos/${repoName}/${values.repoName}`);
-        setRepositories([{
-         name: response.name,
-         description: response.description,
-         repoURL: response.login,
-         URL: response.avatar_url,
-        }])
+        setRepositories([response]);
         setPage(1);
         setEndPaginate(false);
         setHidePaginateButton(true);
@@ -191,6 +186,9 @@ function Repository({ match }) {
           width={300}
         />
         <StyledH3 color={colors.black}>A página que procura não foi encontrada</StyledH3>
+        <Link to="/">
+          <StyledArrowBack data-testid="#redirectButtonBack"/>
+        </Link>
       </ColumnContainer>
     ) : (
       <Container>
@@ -282,7 +280,11 @@ function Repository({ match }) {
         )}
       <ReposContent data-aos="fade-up" data-aos-delay="500">
         {repositories.map(repo => (
-          <RepoContent key={repo.id} data-testid="#repositoryContent">
+          <RepoContent
+            key={repo.id}
+            data-testid="#repositoryContent"
+            href={`https://github.com/${repoName}/${repo.name}`}
+          >
             <RepoTitle>{repo.name}</RepoTitle>
             <Span>{repo.description}</Span>
             <RepoInfoContent>
@@ -293,7 +295,7 @@ function Repository({ match }) {
                 </InfoWrapper>
               )}
               <InfoWrapper>
-                <BiGitRepoForked />
+                <BiGitRepoForked color={colors.black} />
                 <Span isBold>{repo.forks}</Span>
               </InfoWrapper>
               <InfoWrapper>

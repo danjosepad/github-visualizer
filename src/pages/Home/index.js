@@ -30,13 +30,21 @@ import EmptyBox from '../../assets/empty-box.json';
 
 function Home() {
   const [repositories, setRepositories] = useState(
-    JSON.parse(localStorage.getItem('@Github:repos')) || []
+    JSON.parse(localStorage.getItem('@Github:orgs')) || []
   );
 
-  const onAdd = async (values, { setSubmitting, setFieldError }) => {
+  const onAdd = async (
+    values,
+    {
+      setSubmitting,
+      setFieldError,
+      setFieldValue
+    }
+    ) => {
     setSubmitting(true);
     try {
-      const IsValueDuplicated = repositories.some(repo => repo === values.orgName);
+      const IsValueDuplicated = repositories
+        .some(repo => repo === values.orgName);
 
       if (!IsValueDuplicated) {
         const { data: response } = await api.get(`/orgs/${values.orgName}`);
@@ -45,10 +53,12 @@ function Home() {
           description: response.description,
           repoURL: response.login,
           URL: response.avatar_url,
+          isShowing: true,
          }]
         setRepositories(reposUpdated)
-        localStorage.setItem('@Github:repos', JSON.stringify(reposUpdated))
+        localStorage.setItem('@Github:orgs', JSON.stringify(reposUpdated))
       }
+      setFieldValue('orgName', '');
     } catch (err) {
       if(err.response.status === 404) {
         setFieldError('orgName', 'Não foi possível encontrar essa organização')
@@ -140,6 +150,7 @@ function Home() {
             <RepositoryContainer
               key={`${repo} ${idx}`}
               to={`/${repo.repoURL}`}
+              isShowing={repo.isShowing}
               data-testid="#organizationContent"
             >
               <DeleteOrganizationButton onClick={(e) => {

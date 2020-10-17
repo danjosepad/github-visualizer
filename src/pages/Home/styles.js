@@ -152,8 +152,8 @@ export const DeleteOrganizationButton = styled.button.attrs({
   justify-content: center;
   align-items: center;
 
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: ${colors.red};
   border: none;

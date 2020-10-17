@@ -23,6 +23,7 @@
 <p align="center">
   <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#como-usar">Como usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#clipboard-documentação">Documentação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#uso-de-ferramentas-no-código">Ferramentas</a>
 </p>
@@ -30,7 +31,7 @@
 <br>
 
 <p align="center">
-  <img alt="appScreens" src=".github/appScreens.png" width="100%">
+  <img alt="appScreens" src=".github/appScreens.jpg" width="100%">
 </p>
 
 ## :rocket: Tecnologias
@@ -43,6 +44,14 @@ Esse projeto foi desenvolvido com:
 ## 💻 Projeto
 
 O Github Visualizer permite que você busque e gerencie novas organizações dentro do github, e interaja com elas visualizando e buscando por seus repositórios!
+
+## Como Usar
+
+[yarn start]() para iniciar.
+
+[yarn cypress]() para abrir o cypress para testes end-to-end.
+
+Ou acesse o [link do netlify](https://wonderful-pike-87aad7.netlify.app/) (OBS: Recomendo utilizar o local caso queira alterar os links pelo própria URL, já que ao alterar para o link do repositório, o netlify reconhece como outro endereço e não acessará a paginação estruturada)
 
 ## :clipboard: Documentação
 
@@ -58,9 +67,13 @@ Aqui irei citar de forma geral as ferramentas utilizadas, e o motivo para o uso,
 
 - **Cypress** - Para garantir a qualidade do código e se está tudo funcionando conforme o planejado, estruturei testes end-to-end no projeto para garantir que tanto a API quanto o client estão se comunicando da maneira que deveriam.
 
+- **Eslint** - Para garantir a qualidade do código, iniciei o projeto utilizando AirBnb;
+
 - **Formik** - Mesmo que nesse momento pareça "matar uma formiga com uma bazooka", quis apresentar para mostrar como é fácil utilizar, e garantir que caso esse projeto tenha novas funcionalidades, será possível escalar de maneira fácil e com qualidade através dessa biblioteca. Junto a ela, utilizei também o Yup, para garantir de forma geral a estrutura que os dados virão.
 
 - **Lottie** - O uso dessa biblioteca se deu por adicionar gifs em JSON, de uma forma que se apresente muito performática.
+
+- **PropTypes** - para a tipagem das propriedades.
 
 - **React-Helmet** - Pra dar um "charme" e gerenciar os titulos tanto do aplicativo principal quanto das organizações ao acessá-las, trazendo usabilidade e melhoria na experiência de usuário.
 

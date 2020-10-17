@@ -21,8 +21,8 @@ import {
   StyledErrorMessage,
   DeleteOrganizationButton,
   EmptyRepositoryText,
-  EmptyRepositoryWrapper
- } from './styles';
+  EmptyRepositoryWrapper,
+} from './styles';
 import { H1 as Title, H4 as OrgName, Span } from '../../styles/fonts';
 import { colors } from '../../styles/theme';
 import api from '../../services/api';
@@ -38,9 +38,9 @@ function Home() {
     {
       setSubmitting,
       setFieldError,
-      setFieldValue
+      setFieldValue,
     }
-    ) => {
+  ) => {
     setSubmitting(true);
     try {
       const IsValueDuplicated = repositories
@@ -54,25 +54,23 @@ function Home() {
           repoURL: response.login,
           URL: response.avatar_url,
           isShowing: true,
-         }]
-        setRepositories(reposUpdated)
-        localStorage.setItem('@Github:orgs', JSON.stringify(reposUpdated))
+        }];
+        setRepositories(reposUpdated);
+        localStorage.setItem('@Github:orgs', JSON.stringify(reposUpdated));
       }
       setFieldValue('orgName', '');
     } catch (err) {
-      if(err.response.status === 404) {
-        setFieldError('orgName', 'Não foi possível encontrar essa organização')
+      if (err.response.status === 404) {
+        setFieldError('orgName', 'Não foi possível encontrar essa organização');
       } else {
-        setFieldError('orgName', err.message)
+        setFieldError('orgName', err.message);
       }
-
     }
 
     setSubmitting(false);
 
-
     // console.log(response)
-  }
+  };
   const deleteRepo = (idx, event) => {
     // Making sure only to click on button instead of div and button
     event.preventDefault();
@@ -80,22 +78,22 @@ function Home() {
     const repositoriesMirror = [...repositories];
     repositoriesMirror.splice(idx, 1);
     setRepositories(repositoriesMirror);
-    localStorage.setItem('@Github:repos', JSON.stringify(repositoriesMirror))
-  }
+    localStorage.setItem('@Github:repos', JSON.stringify(repositoriesMirror));
+  };
 
   const validationSchema = Yup.object({
     // We could use required over here but since as an user experience
     // we don't want the border to go red everythng he deletes text so
     // we may just check if is a string
-    orgName: Yup.string()
-  })
+    orgName: Yup.string(),
+  });
 
   // We can use JSON as gif using Lottie so we have more performance
   const LottieOptions = {
     loop: true,
     autoplay: true,
-    animationData: EmptyBox
-  }
+    animationData: EmptyBox,
+  };
 
   return (
     <Container>
@@ -105,7 +103,7 @@ function Home() {
       <Content>
 
         <LogoContent data-testid="#logoContent">
-          <AiOutlineGithub size="160px"/>
+          <AiOutlineGithub size="160px" />
           <Title>Github Visualizer</Title>
           <Formik
             initialValues={{ orgName: '' }}
@@ -118,7 +116,7 @@ function Home() {
               values,
               isSubmitting,
               handleChange,
-              errors
+              errors,
             }) => (
               <Form onSubmit={handleSubmit}>
                 <FormWrapper>
@@ -135,50 +133,52 @@ function Home() {
                     type="submit"
                     disabled={values.orgName === '' || isSubmitting}
                     isError={errors.orgName}
-                    >
+                  >
                     <AiOutlinePlus size="25px" color={colors.white} />
                   </Button>
                 </FormWrapper>
                 <ErrorMessage id="orgName" name="orgName" component={StyledErrorMessage} />
               </Form>
-            )}
+            )
+}
           </Formik>
         </LogoContent>
         <RepositoriesWrapper>
-        {repositories[0] ? (
-          repositories.map((repo, idx) => (
-            <RepositoryContainer
-              key={`${repo} ${idx}`}
-              to={`/${repo.repoURL}`}
-              isShowing={repo.isShowing}
-              data-testid="#organizationContent"
-            >
-              <DeleteOrganizationButton onClick={(e) => {
-                deleteRepo(idx, e)
-              }}>
-                <BsTrash size="20px" color={colors.white} />
-              </DeleteOrganizationButton>
-              <img src={repo.URL} alt={repo.name} />
-              <OrgName>{repo.name}</OrgName>
-              <Span>{repo.description}</Span>
-            </RepositoryContainer>
-          ))
-        ) : (
-          <EmptyRepositoryWrapper>
-            <Lottie
-              options={LottieOptions}
-              height={300}
-              width={300}
-            />
-            <EmptyRepositoryText>
-              Adicione uma organização para começar
-            </EmptyRepositoryText>
-          </EmptyRepositoryWrapper>
-        )}
+          {repositories[0] ? (
+            repositories.map((repo, idx) => (
+              <RepositoryContainer
+                key={`${repo} ${idx}`}
+                to={`/${repo.repoURL}`}
+                isShowing={repo.isShowing}
+                data-testid="#organizationContent"
+              >
+                <DeleteOrganizationButton onClick={(e) => {
+                  deleteRepo(idx, e);
+                }}
+                >
+                  <BsTrash size="20px" color={colors.white} />
+                </DeleteOrganizationButton>
+                <img src={repo.URL} alt={repo.name} />
+                <OrgName>{repo.name}</OrgName>
+                <Span>{repo.description}</Span>
+              </RepositoryContainer>
+            ))
+          ) : (
+            <EmptyRepositoryWrapper>
+              <Lottie
+                options={LottieOptions}
+                height={300}
+                width={300}
+              />
+              <EmptyRepositoryText>
+                Adicione uma organização para começar
+              </EmptyRepositoryText>
+            </EmptyRepositoryWrapper>
+          )}
         </RepositoriesWrapper>
       </Content>
     </Container>
-  )
+  );
 }
 
-export default Home
+export default Home;

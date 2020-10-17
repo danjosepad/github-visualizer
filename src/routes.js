@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, BrowserRouter, Route } from 'react-router-dom'
+import { Switch, BrowserRouter, Route } from 'react-router-dom';
 
 import HomePage from './pages/Home';
 import RepositoryPage from './pages/Repository';
@@ -12,7 +12,7 @@ function Routes() {
         <Route path="/" exact component={HomePage} />
       </Switch>
     </BrowserRouter>
-  )
+  );
 }
 
-export default Routes
+export default Routes;

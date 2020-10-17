@@ -5,7 +5,7 @@ export const breakpoints = {
   sm: '600px',
   md: '960px',
   lg: '1280px',
-  xl: '1920px'
+  xl: '1920px',
 };
 
 export const mediaQuery = {
@@ -18,5 +18,5 @@ export const mediaQuery = {
   minLg: `(min-width: ${breakpoints.lg})`,
   maxLg: `(max-width: ${breakpoints.lg})`,
   minXl: `(min-width: ${breakpoints.xl})`,
-  maxXl: `(max-width: ${breakpoints.xl})`
+  maxXl: `(max-width: ${breakpoints.xl})`,
 };

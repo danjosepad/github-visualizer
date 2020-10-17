@@ -16,7 +16,7 @@ const fadeUp = keyframes`
     opacity: 1;
     transform: translateY(0px);
   }
-`
+`;
 
 const rotate = keyframes`
   from {
@@ -25,7 +25,7 @@ const rotate = keyframes`
   to {
     transform: rotate(360deg);
   }
-`
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -49,7 +49,7 @@ export const LoadingWrapper = styled.div`
   svg {
     animation: ${rotate} 2s linear infinite;
   }
-`
+`;
 
 export const LogoContent = styled.div`
   display: flex;
@@ -69,7 +69,7 @@ export const LogoContent = styled.div`
   }
 
   animation : ${fadeUp} 0.25s;
-`
+`;
 
 export const InfoContent = styled.div`
   display: flex;
@@ -95,7 +95,7 @@ export const InfoContent = styled.div`
       margin: 0px;
     }
   }
-`
+`;
 
 export const InfoWrapper = styled.div`
   display: flex;
@@ -104,7 +104,7 @@ export const InfoWrapper = styled.div`
   & > * + * {
     margin-left: 8px;
   }
-`
+`;
 
 export const Form = styled.form`
   margin-top: 30px;
@@ -119,7 +119,7 @@ export const FormWrapper = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-`
+`;
 
 export const Input = styled.input`
   width: 100%;
@@ -131,7 +131,7 @@ export const Input = styled.input`
   box-shadow: ${shadows.default};
   transition: background 0.2s;
 
-  ${ ({ isError }) => isError && `
+  ${({ isError }) => isError && `
     border: 1px solid ${colors.red};
   `}
 
@@ -151,7 +151,7 @@ export const Button = styled.button`
   box-shadow: ${shadows.default};
   transition: background 0.2s;
 
-  ${ ({ isError }) => isError && `
+  ${({ isError }) => isError && `
     background: ${colors.red};
   `}
 
@@ -169,7 +169,7 @@ export const ReposContent = styled.div`
   & > * + * {
     margin-top: 20px;
   }
-`
+`;
 
 export const RepoContent = styled.a`
   flex: 1;
@@ -196,14 +196,14 @@ export const RepoContent = styled.a`
     }
   }
 
-`
+`;
 
 export const Circle = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: ${ ({color}) => color && `${color}` };
-`
+  background: ${({ color }) => color && `${color}`};
+`;
 
 export const RepoInfoContent = styled.div`
   margin-top: 16px;
@@ -213,16 +213,16 @@ export const RepoInfoContent = styled.div`
   & > * + * {
     margin: 8px;
   }
-`
+`;
 
 export const StyledArrowBack = styled(AiOutlineArrowLeft).attrs({
   size: '30px',
-  color: colors.black
+  color: colors.black,
 })`
   position: absolute;
   top: 24px;
   left: 24px;
-`
+`;
 
 export const PaginateButton = styled.button`
   margin-top: 40px;
@@ -245,7 +245,7 @@ export const PaginateButton = styled.button`
   svg {
     animation: ${rotate} 2s linear infinite;
   }
-`
+`;
 
 export const ColumnContainer = styled.div`
   display: flex;
@@ -258,10 +258,10 @@ export const ColumnContainer = styled.div`
   h3 {
     text-align: center;
   }
-`
+`;
 export const StyledErrorMessage = styled.div`
   margin-top: 20px;
   color: ${colors.red};
   font-weight: 700;
   font-family: 'Roboto';
-  `
+  `;

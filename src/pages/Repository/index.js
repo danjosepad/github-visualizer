@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineLoading3Quarters, AiOutlinePlus, AiFillStar } from 'react-icons/ai';
+import { BiGitRepoForked } from 'react-icons/bi';
+import { Formik, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
 import { FiLink } from 'react-icons/fi';
 import { GrLocation } from 'react-icons/gr';
-import { BiGitRepoForked } from 'react-icons/bi';
-import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Lottie from 'react-lottie';
 import { Helmet } from 'react-helmet';
+import PropTypes from 'prop-types';
 
 // Project imports
 
@@ -32,10 +33,9 @@ import {
   PaginateButton,
   ColumnContainer,
   StyledErrorMessage,
-  FormWrapper
+  FormWrapper,
 } from './styles';
 import { H1 as Title, H3 as StyledH3, H4 as RepoTitle, Span } from '../../styles/fonts';
-
 
 function Repository({ match }) {
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,6 @@ function Repository({ match }) {
 
   const loadRepoData = useCallback(
     async () => {
-
       try {
         const [org, repos] = await Promise.all([
           api.get(`orgs/${repoName}`),
@@ -62,10 +61,10 @@ function Repository({ match }) {
             params: {
               direction: 'asc',
               per_page: 5,
-            }
+            },
           }),
         ]);
-        console.log({ org, repos })
+        console.log({ org, repos });
         setRepositories(repos.data);
         setOrganizationData(org.data);
         setHidePaginateButton(false); // Make sure that everything would be fine
@@ -73,7 +72,6 @@ function Repository({ match }) {
       } catch (error) {
         setRepoNotFound(true);
       }
-
     },
     [repoName]
   );
@@ -81,15 +79,15 @@ function Repository({ match }) {
   useEffect(() => {
     (async function loadData() {
       await loadRepoData();
-    })();
+    }());
   }, [loadRepoData]);
 
   const validationSchema = Yup.object({
     // We could use required over here but since as an user experience
     // we don't want the border to go red everythng he deletes text so
     // we may just check if is a string
-    repoName: Yup.string()
-  })
+    repoName: Yup.string(),
+  });
 
   const randomColors = [
     'red',
@@ -98,17 +96,16 @@ function Repository({ match }) {
     'blue',
     'orange',
     'pink',
-    'purple'
-  ]
+    'purple',
+  ];
 
   const getRandomColor = (language) => {
-
     const checkIfLanguageAlreadyExists = listOfLanguages.filter(
       lang => lang.language === language
-    )
+    );
 
     if (checkIfLanguageAlreadyExists.length > 0) {
-      return checkIfLanguageAlreadyExists[0].color
+      return checkIfLanguageAlreadyExists[0].color;
     }
 
     const getRandomValue = randomColors[
@@ -117,11 +114,11 @@ function Repository({ match }) {
 
     setListOfLanguages(langs => [...langs, {
       language,
-      color: colors[getRandomValue]
+      color: colors[getRandomValue],
     }]);
 
-    return colors[getRandomValue]
-  }
+    return colors[getRandomValue];
+  };
 
   const handlePaginate = async () => {
     try {
@@ -130,128 +127,127 @@ function Repository({ match }) {
         params: {
           direction: 'asc',
           per_page: 5,
-          page: page + 1
-        }
+          page: page + 1,
+        },
       });
 
       if (data.length === 0) {
         return setEndPaginate(true);
       }
 
-      setPage(count => count + 1)
-      setRepositories(repos => [...repos, ...data])
+      setPage(count => count + 1);
+      setRepositories(repos => [...repos, ...data]);
       setIsLoadingMore(false);
     } catch (err) {
-
+      console.error(err);
     }
-  }
+  };
 
   const onSearch = async (values, { setSubmitting, setFieldError }) => {
     setSubmitting(true);
     try {
-        const { data: response } = await api.get(`/repos/${repoName}/${values.repoName}`);
-        setRepositories([response]);
-        setPage(1);
-        setEndPaginate(false);
-        setHidePaginateButton(true);
+      const { data: response } = await api.get(`/repos/${repoName}/${values.repoName}`);
+      setRepositories([response]);
+      setPage(1);
+      setEndPaginate(false);
+      setHidePaginateButton(true);
     } catch (err) {
-      if(err.response.status === 404) {
-        setFieldError('repoName', 'Não foi possível encontrar esse repositório')
+      if (err.response.status === 404) {
+        setFieldError('repoName', 'Não foi possível encontrar esse repositório');
       } else {
-        setFieldError('repoName', err.message)
+        setFieldError('repoName', err.message);
       }
     }
 
     setSubmitting(false);
-  }
+  };
 
   // We can use JSON as gif using Lottie so we have more performance
   const LottieOptions = {
     loop: true,
     autoplay: true,
-    animationData: Error404
-  }
+    animationData: Error404,
+  };
 
   return (
-   <>
+    <>
+      {repoNotFound ? (
+        <ColumnContainer>
+          <Helmet>
+            <title>Repo not found</title>
+          </Helmet>
+          <Lottie
+            options={LottieOptions}
+            height={300}
+            width={300}
+          />
+          <StyledH3 color={colors.black}>A página que procura não foi encontrada</StyledH3>
+          <Link to="/">
+            <StyledArrowBack data-testid="#redirectButtonBack" />
+          </Link>
+        </ColumnContainer>
+      ) : (
+        <Container>
+          <Link to="/">
+            <StyledArrowBack data-testid="#redirectButtonBack" />
+          </Link>
 
-    {repoNotFound ? (
-      <ColumnContainer>
-      <Helmet>
-        <title>Repo not found</title>
-      </Helmet>
-        <Lottie
-          options={LottieOptions}
-          height={300}
-          width={300}
-        />
-        <StyledH3 color={colors.black}>A página que procura não foi encontrada</StyledH3>
-        <Link to="/">
-          <StyledArrowBack data-testid="#redirectButtonBack"/>
-        </Link>
-      </ColumnContainer>
-    ) : (
-      <Container>
-      <Link to="/">
-        <StyledArrowBack data-testid="#redirectButtonBack"/>
-      </Link>
-
-      <Content>
-      <Helmet>
-        <title>{organizationData.name}</title>
-      </Helmet>
-        {loading ? (
-          <LoadingWrapper>
-            <AiOutlineLoading3Quarters size="160px" color={colors.green} />
-          </LoadingWrapper>
-        ) : (
-          <>
-          <LogoContent data-aos="fade-up">
-            <img src={organizationData.avatar_url} alt={`${organizationData.name} avatar`} />
-            <Title>{organizationData.name}</Title>
-            <StyledH3 color={colors.gray}>
-              {organizationData.description}
-            </StyledH3>
-            <InfoContent>
-              {organizationData.location && (
-                <InfoWrapper>
-                  <GrLocation color={colors.grayLight} />
+          <Content>
+            <Helmet>
+              <title>{organizationData.name}</title>
+            </Helmet>
+            {loading ? (
+              <LoadingWrapper>
+                <AiOutlineLoading3Quarters size="160px" color={colors.green} />
+              </LoadingWrapper>
+            ) : (
+              <>
+                <LogoContent data-aos="fade-up">
+                  <img src={organizationData.avatar_url} alt={`${organizationData.name} avatar`} />
+                  <Title>{organizationData.name}</Title>
                   <StyledH3 color={colors.gray}>
-                    {organizationData.location}
+                    {organizationData.description}
                   </StyledH3>
-                </InfoWrapper>
-              )}
+                  <InfoContent>
+                    {organizationData.location && (
+                    <InfoWrapper>
+                      <GrLocation color={colors.grayLight} />
+                      <StyledH3 color={colors.gray}>
+                        {organizationData.location}
+                      </StyledH3>
+                    </InfoWrapper>
+                    )}
 
-              {organizationData.blog && (
-                <InfoWrapper>
-                  <FiLink color={colors.gray} />
-                  <StyledH3 color={colors.gray}>
-                    {organizationData.blog}
-                  </StyledH3>
-                </InfoWrapper>
-              )}
-            </InfoContent>
-          </LogoContent>
-          <Formik
-            initialValues={{ repoName: '' }}
-            validate={ async ({ repoName }) => {
-              // Now we know that this will only occur
-              // when user searched and successfully found
-              // an existing repository
-              if (repoName === '' && hidePaginateButton) {
-                await loadRepoData();
-              }
-            }}
-            validationSchema={validationSchema}
-            onSubmit={onSearch}
-          >
-            {
+                    {organizationData.blog && (
+                    <InfoWrapper>
+                      <FiLink color={colors.gray} />
+                      <StyledH3 color={colors.gray}>
+                        {organizationData.blog}
+                      </StyledH3>
+                    </InfoWrapper>
+                    )}
+                  </InfoContent>
+                </LogoContent>
+                <Formik
+                  initialValues={{ repoName: '' }}
+                  validate={async ({ repositoryName }) => {
+                    // Now we know that this will only occur
+                    // when user searched and successfully found
+                    // an existing repository
+                    if (repositoryName === '' && hidePaginateButton) {
+                      await loadRepoData();
+                    }
+                  }}
+                  validationSchema={validationSchema}
+                  onSubmit={onSearch}
+                >
+                  {
             ({
               handleSubmit,
               values,
               isSubmitting,
               handleChange,
-              errors
+              errors,
             }) => (
               <Form onSubmit={handleSubmit} data-aos="fade-up">
                 <FormWrapper data-testid="#formWrapper">
@@ -268,68 +264,78 @@ function Repository({ match }) {
                     type="submit"
                     disabled={values.repoName === '' || isSubmitting}
                     isError={errors.repoName}
-                    >
+                  >
                     <AiOutlinePlus size="25px" color={colors.white} />
                   </Button>
                 </FormWrapper>
                 <ErrorMessage name="repoName" component={StyledErrorMessage} />
               </Form>
+            )
+}
+                </Formik>
+              </>
             )}
-          </Formik>
-          </>
-        )}
-      <ReposContent data-aos="fade-up" data-aos-delay="500">
-        {repositories.map(repo => (
-          <RepoContent
-            key={repo.id}
-            data-testid="#repositoryContent"
-            href={`https://github.com/${repoName}/${repo.name}`}
-          >
-            <RepoTitle>{repo.name}</RepoTitle>
-            <Span>{repo.description}</Span>
-            <RepoInfoContent>
-              {repo.language && (
-                <InfoWrapper>
-                  <Circle color={getRandomColor(repo.language)} />
-                  <Span isBold>{repo.language}</Span>
-                </InfoWrapper>
+            <ReposContent data-aos="fade-up" data-aos-delay="500">
+              {repositories.map(repo => (
+                <RepoContent
+                  key={repo.id}
+                  data-testid="#repositoryContent"
+                  href={`https://github.com/${repoName}/${repo.name}`}
+                >
+                  <RepoTitle>{repo.name}</RepoTitle>
+                  <Span>{repo.description}</Span>
+                  <RepoInfoContent>
+                    {repo.language && (
+                    <InfoWrapper>
+                      <Circle color={getRandomColor(repo.language)} />
+                      <Span isBold>{repo.language}</Span>
+                    </InfoWrapper>
+                    )}
+                    <InfoWrapper>
+                      <BiGitRepoForked color={colors.black} />
+                      <Span isBold>{repo.forks}</Span>
+                    </InfoWrapper>
+                    <InfoWrapper>
+                      <AiFillStar color={colors.yellow} />
+                      <Span isBold>{repo.stargazers_count}</Span>
+                    </InfoWrapper>
+                  </RepoInfoContent>
+                </RepoContent>
+              ))}
+            </ReposContent>
+            {!hidePaginateButton && (
+            <>
+              {endPaginate ? (
+                <StyledH3 color={colors.gray}>
+                  Não foi possível encontrar mais repositórios
+                </StyledH3>
+              ) : (
+                <PaginateButton
+                  type="button"
+                  onClick={() => handlePaginate()}
+                >
+                  {isLoadingMore ? (
+                    <AiOutlineLoading3Quarters size="30px" color={colors.white} />
+                  ) : 'Carregar'}
+                </PaginateButton>
               )}
-              <InfoWrapper>
-                <BiGitRepoForked color={colors.black} />
-                <Span isBold>{repo.forks}</Span>
-              </InfoWrapper>
-              <InfoWrapper>
-                <AiFillStar color={colors.yellow}/>
-                <Span isBold>{repo.stargazers_count}</Span>
-              </InfoWrapper>
-            </RepoInfoContent>
-          </RepoContent>
-        ))}
-      </ReposContent>
-      {!hidePaginateButton && (
-        <>
-          {endPaginate ? (
-            <StyledH3 color={colors.gray}>
-              Não foi possível encontrar mais repositórios
-            </StyledH3>
-          ) : (
-            <PaginateButton
-              type="button"
-              onClick={() => handlePaginate()}
-              >
-                {isLoadingMore ? (
-                  <AiOutlineLoading3Quarters size="30px" color={colors.white} />
-                ) : 'Carregar'}
-              </PaginateButton>
-          )}
-        </>
-      )}
+            </>
+            )}
 
-      </Content>
-    </Container>
-    )}
-   </>
-  )
+          </Content>
+        </Container>
+      )}
+    </>
+  );
 }
 
-export default Repository
+Repository.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.object,
+    isExact: PropTypes.bool,
+    path: PropTypes.string,
+    url: PropTypes.string,
+  }).isRequired,
+};
+
+export default Repository;

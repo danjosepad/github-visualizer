@@ -16,7 +16,7 @@ const fadeUp = keyframes`
     opacity: 1;
     transform: translateY(0px);
   }
-`
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ export const LogoContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export const Form = styled.form`
   margin-top: 30px;
@@ -48,7 +48,7 @@ export const FormWrapper = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-`
+`;
 
 export const Input = styled.input`
   width: 100%;
@@ -61,7 +61,7 @@ export const Input = styled.input`
   transition: background 0.2s;
   font-size: 16px;
 
-  ${ ({ isError }) => isError && `
+  ${({ isError }) => isError && `
     border: 1px solid ${colors.red};
   `}
 
@@ -81,7 +81,7 @@ export const Button = styled.button`
   box-shadow: ${shadows.default};
   transition: background 0.2s;
 
-  ${ ({ isError }) => isError && `
+  ${({ isError }) => isError && `
     background: ${colors.red};
   `}
 
@@ -138,10 +138,10 @@ export const StyledErrorMessage = styled.div`
   color: ${colors.red};
   font-weight: 700;
   font-family: 'Roboto';
-  `
+  `;
 
 export const DeleteOrganizationButton = styled.button.attrs({
-  type: 'submit'
+  type: 'submit',
 })`
   position: absolute;
   top: 8px;
@@ -157,17 +157,17 @@ export const DeleteOrganizationButton = styled.button.attrs({
   border-radius: 50%;
   background: ${colors.red};
   border: none;
-`
+`;
 
 export const EmptyRepositoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 80px;
   animation: ${fadeUp} 0.25s;
-`
+`;
 
 export const EmptyRepositoryText = styled(H3)`
   margin-top: 40px;
   color: ${colors.gray};
   text-align: center;
-`
+`;

@@ -157,14 +157,16 @@ function Home() {
                 to={`/${repo.repoURL}`}
                 data-testid="#organizationContent"
               >
-                <DeleteOrganizationButton onClick={(e) => {
-                  deleteRepo(idx, e);
-                }}
+                <DeleteOrganizationButton
+                  aria-label="delete repo"
+                  onClick={(e) => {
+                    deleteRepo(idx, e);
+                  }}
                 >
                   <BsTrash size="20px" color={colors.white} />
                 </DeleteOrganizationButton>
                 <img src={repo.URL} alt={repo.name} />
-                <OrgName>{repo.name}</OrgName>
+                <OrgName aria-label="repo name">{repo.name}</OrgName>
                 <Span>{repo.description}</Span>
               </RepositoryContainer>
             ))

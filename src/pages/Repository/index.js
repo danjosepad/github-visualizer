@@ -190,7 +190,7 @@ function Repository({ match }) {
       ) : (
         <Container>
           <Link to="/">
-            <StyledArrowBack data-testid="#redirectButtonBack" />
+            <StyledArrowBack aria-label="redirect back" />
           </Link>
 
           <Content>
@@ -257,7 +257,7 @@ function Repository({ match }) {
                 >
                   <Input
                     type="text"
-                    data-testid="#repoNameInput"
+                    aria-label="search repository"
                     name="repoName"
                     placeholder="Buscar repositórios"
                     isError={errors.repoName}
@@ -285,6 +285,7 @@ function Repository({ match }) {
                   {repositories.map(repo => (
                     <RepoContent
                       key={repo.id}
+                      aria-label="repository content"
                       data-testid="#repositoryContent"
                       href={`https://github.com/${repoName}/${repo.name}`}
                     >
